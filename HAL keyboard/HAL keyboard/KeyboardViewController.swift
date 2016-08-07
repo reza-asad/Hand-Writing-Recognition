@@ -9,34 +9,39 @@
 import UIKit
 
 class KeyboardViewController: UIInputViewController {
-
-  //  @IBOutlet var nextKeyboardButton: UIButton!
+    var lastPoint: CGPoint?
+    let BRUSHWIDTH: CGFloat = 3.0
+    let red: CGFloat = 0.0
+    let green: CGFloat = 0.0
+    let blue: CGFloat = 0.0
+    let OPACITY: CGFloat = 1.0
+    var swiped = false
+    
+    @IBAction func nextKeyboardButton(sender: UIButton) {
+        advanceToNextInputMode()
+    }
+    
+    @IBAction func clearDrawing(sender: UIButton) {
+        print("xxxxxxxxxxxxxxxxx CLEAR xxxxxxx")
+        letterDrawView.image = nil
+        letterDrawView.backgroundColor = UIColor.whiteColor()
+    }
+    var jsonObject: [String: AnyObject]?
+    
     var keyboardView: UIView!
     
-    /*
+    @IBOutlet weak var letterDrawView: UIImageView!
+    
+    
     override func updateViewConstraints() {
         super.updateViewConstraints()
     
         // Add custom view sizing constraints here
-    }*/
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadInterface()
-        /*
-        self.nextKeyboardButton = UIButton(type: .System)
-    
-        self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), forState: .Normal)
-        self.nextKeyboardButton.sizeToFit()
-        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-    
-        self.nextKeyboardButton.addTarget(self, action: #selector(advanceToNextInputMode), forControlEvents: .TouchUpInside)
-        
-        self.view.addSubview(self.nextKeyboardButton)
-    
-        self.nextKeyboardButton.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor).active = true
-        self.nextKeyboardButton.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor).active = true
-        */
     }
     
     func loadInterface() {
@@ -44,6 +49,7 @@ class KeyboardViewController: UIInputViewController {
         let keyboardNib = UINib(nibName: "KeyboardView", bundle: nil)
         // instantiate the view
         keyboardView = keyboardNib.instantiateWithOwner(self, options: nil)[0] as! UIView
+ 
         keyboardView.frame = self.view.frame
     
         // add the interface to the main view
@@ -51,9 +57,11 @@ class KeyboardViewController: UIInputViewController {
         
         // copy the background color
         view.backgroundColor = keyboardView.backgroundColor
+        
+        
     }
 
-    /*
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated
@@ -63,6 +71,7 @@ class KeyboardViewController: UIInputViewController {
         // The app is about to change the document's contents. Perform any preparation here.
     }
 
+    /*
     override func textDidChange(textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
     
@@ -74,6 +83,76 @@ class KeyboardViewController: UIInputViewController {
             textColor = UIColor.blackColor()
         }
         self.nextKeyboardButton.setTitleColor(textColor, forState: .Normal)
-    }*/
+    }
+ */
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        swiped = false
+        if let touch = touches.first { // touching possible with only 1 finger
+            let touchedPoint = touch.locationInView(letterDrawView)
+            if (CGRectContainsPoint(letterDrawView.bounds, touchedPoint)) {
+                print("--------began touch--------")
+                lastPoint = touchedPoint
+            }
+        }
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
+        let x = Int(round(fromPoint.x))
+        let y = Int(round(fromPoint.y))
+        let timeInMS = Int(round((NSDate().timeIntervalSince1970) * 1000))
+        print("x: \(x), y: \(y), time: \(timeInMS)")
+        UIGraphicsBeginImageContext(letterDrawView.frame.size)
+        let context = UIGraphicsGetCurrentContext()
+        letterDrawView.image?.drawInRect(CGRect(x: 0, y: 0, width: letterDrawView.frame.size.width, height: letterDrawView.frame.size.height))
+        
+        // 2
+        CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
+        CGContextAddLineToPoint(context, toPoint.x, toPoint.y)
+        
+        // 3
+        CGContextSetLineCap(context, CGLineCap.Round)
+        CGContextSetLineWidth(context, BRUSHWIDTH)
+        CGContextSetRGBStrokeColor(context, red, green, blue, OPACITY)
+        CGContextSetBlendMode(context, CGBlendMode.Normal)
+        
+        // 4
+        CGContextStrokePath(context)
+        
+        // 5
+        letterDrawView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        swiped = true
+        if let touch = touches.first {
+            let currentPoint = touch.locationInView(letterDrawView)
+            if let lastPoint = lastPoint where CGRectContainsPoint(letterDrawView.bounds, currentPoint){
+                drawLineFrom(lastPoint, toPoint: currentPoint)
+                self.lastPoint = currentPoint
+            } else {
+                self.lastPoint = nil
+            }
+            
+        }
+        super.touchesMoved(touches, withEvent: event)
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let lastPoint = lastPoint where !swiped {
+            // draw a point
+            drawLineFrom(lastPoint, toPoint: lastPoint)
+        }
+        print("-----------end touch-----------")
+        super.touchesEnded(touches, withEvent: event)
+    }
+    
+    func makeJson() {
+        
+    }
+    
 
 }
