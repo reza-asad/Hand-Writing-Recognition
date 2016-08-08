@@ -16,6 +16,18 @@ class KeyboardViewController: UIInputViewController {
     let blue: CGFloat = 0.0
     let OPACITY: CGFloat = 1.0
     var swiped = false
+    let TESTUSER = "99999"
+    typealias Stroke = [[String: Int]]
+    var currentStroke = Stroke()
+    
+    @IBAction func getLetterFromServer(sender: UIButton) {
+        if (jsonObject[TESTUSER]!.count > 0) {
+            if let jsonStringPretty = JSONStringify(jsonObject) {
+                print(jsonStringPretty)
+            }
+        }
+    }
+    
     
     @IBAction func nextKeyboardButton(sender: UIButton) {
         advanceToNextInputMode()
@@ -23,10 +35,20 @@ class KeyboardViewController: UIInputViewController {
     
     @IBAction func clearDrawing(sender: UIButton) {
         print("xxxxxxxxxxxxxxxxx CLEAR xxxxxxx")
+        jsonObject[TESTUSER] = []
         letterDrawView.image = nil
         letterDrawView.backgroundColor = UIColor.whiteColor()
     }
-    var jsonObject: [String: AnyObject]?
+    
+    /* holds the json data for letter's strokes in the format
+     * {'user_id': [
+     *      [{'time': time, 'x': x, 'y': y}, {'time': time, 'x': x, 'y': y}, ...], -- a stroke
+     *      [{'time': time, 'x': x, 'y': y}], -- another stroke
+     *      ...
+     * ]}
+     *
+     */
+    var jsonObject = [String: [Stroke]]()
     
     var keyboardView: UIView!
     
@@ -42,6 +64,7 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadInterface()
+        jsonObject[TESTUSER] = []
     }
     
     func loadInterface() {
@@ -103,6 +126,8 @@ class KeyboardViewController: UIInputViewController {
         let y = Int(round(fromPoint.y))
         let timeInMS = Int(round((NSDate().timeIntervalSince1970) * 1000))
         print("x: \(x), y: \(y), time: \(timeInMS)")
+        let coords: [String: Int] = ["x": x, "y": y, "time": timeInMS]
+        currentStroke.append(coords)
         UIGraphicsBeginImageContext(letterDrawView.frame.size)
         let context = UIGraphicsGetCurrentContext()
         letterDrawView.image?.drawInRect(CGRect(x: 0, y: 0, width: letterDrawView.frame.size.width, height: letterDrawView.frame.size.height))
@@ -147,11 +172,34 @@ class KeyboardViewController: UIInputViewController {
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
         print("-----------end touch-----------")
+        if (currentStroke.count > 0) {
+            jsonObject[TESTUSER]!.append(currentStroke)
+            currentStroke = []
+        }
+        
         super.touchesEnded(touches, withEvent: event)
     }
     
-    func makeJson() {
+    // https://medium.com/swift-programming/4-json-in-swift-144bf5f88ce4#.nt7yor8tz
+    func JSONStringify(value: AnyObject, prettyPrinted:Bool = false) -> String? {
         
+        let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(rawValue: 0)
+        
+        
+        if NSJSONSerialization.isValidJSONObject(value) {
+            
+            do {
+                let data = try NSJSONSerialization.dataWithJSONObject(value, options: options)
+                if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                    return string as String
+                }
+            } catch {
+                print("JSON conversion error")
+                return nil
+            }
+            
+        }
+        return nil
     }
     
 

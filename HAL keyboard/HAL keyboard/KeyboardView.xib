@@ -49,6 +49,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14X-IK-ljm">
                     <rect key="frame" x="273" y="158" width="39" height="30"/>
                     <state key="normal" title="☑️"/>
+                    <connections>
+                        <action selector="getLetterFromServer:" destination="-1" eventType="touchUpInside" id="7Tc-Ee-qTu"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfJ-eW-Xnr">
                     <rect key="frame" x="8" y="162" width="39" height="30"/>
