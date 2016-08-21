@@ -24,7 +24,7 @@ class KeyboardViewController: UIInputViewController {
         if (jsonObject[TESTUSER]!.count > 0) {
             if let jsonStringPretty = JSONStringify(jsonObject) {
                 print(jsonStringPretty)
-            }
+            } 
         }
     }
     
