@@ -439,6 +439,7 @@
 				A172B8FC1D567C340066FE12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

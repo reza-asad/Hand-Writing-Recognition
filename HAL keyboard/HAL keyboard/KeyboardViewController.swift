@@ -19,11 +19,12 @@ class KeyboardViewController: UIInputViewController {
     let TESTUSER = "99999"
     typealias Stroke = [[String: Int]]
     var currentStroke = Stroke()
+    let URL = NSURL(string: "http://new-flask-env.fjx3ah5cp2.us-west-2.elasticbeanstalk.com/letter")
     
     @IBAction func getLetterFromServer(sender: UIButton) {
         if (jsonObject[TESTUSER]!.count > 0) {
-            if let jsonStringPretty = JSONStringify(jsonObject) {
-                print(jsonStringPretty)
+            if let jsonData = JSONStringify(jsonObject) {
+                print(sendHTTPRequest(jsonData))
             } 
         }
     }
@@ -34,7 +35,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @IBAction func clearDrawing(sender: UIButton) {
-        print("xxxxxxxxxxxxxxxxx CLEAR xxxxxxx")
+        //print("xxxxxxxxxxxxxxxxx CLEAR xxxxxxx")
         jsonObject[TESTUSER] = []
         letterDrawView.image = nil
         letterDrawView.backgroundColor = UIColor.whiteColor()
@@ -84,6 +85,34 @@ class KeyboardViewController: UIInputViewController {
         
     }
 
+    func sendHTTPRequest(jsonBody: NSData) -> NSURLSessionDataTask {
+        
+        let request = NSMutableURLRequest(URL: URL!)
+        request.HTTPMethod = "POST"
+        // insert json data to the request
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = jsonBody
+        
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
+            if error != nil{
+                print("Error -> \(error)")
+                return
+            }
+            
+            do {
+                let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject]
+                
+                print("Result -> \(result)")
+                
+            } catch {
+                print("Error -> \(error)")
+            }
+        }
+        
+        task.resume()
+        return task
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -114,7 +143,7 @@ class KeyboardViewController: UIInputViewController {
         if let touch = touches.first { // touching possible with only 1 finger
             let touchedPoint = touch.locationInView(letterDrawView)
             if (CGRectContainsPoint(letterDrawView.bounds, touchedPoint)) {
-                print("--------began touch--------")
+                //print("--------began touch--------")
                 lastPoint = touchedPoint
             }
         }
@@ -125,7 +154,7 @@ class KeyboardViewController: UIInputViewController {
         let x = Int(round(fromPoint.x))
         let y = Int(round(fromPoint.y))
         let timeInMS = Int(round((NSDate().timeIntervalSince1970) * 1000))
-        print("x: \(x), y: \(y), time: \(timeInMS)")
+        //print("x: \(x), y: \(y), time: \(timeInMS)")
         let coords: [String: Int] = ["x": x, "y": y, "time": timeInMS]
         currentStroke.append(coords)
         UIGraphicsBeginImageContext(letterDrawView.frame.size)
@@ -171,7 +200,7 @@ class KeyboardViewController: UIInputViewController {
             // draw a point
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
-        print("-----------end touch-----------")
+        //print("-----------end touch-----------")
         if (currentStroke.count > 0) {
             jsonObject[TESTUSER]!.append(currentStroke)
             currentStroke = []
@@ -181,7 +210,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     // https://medium.com/swift-programming/4-json-in-swift-144bf5f88ce4#.nt7yor8tz
-    func JSONStringify(value: AnyObject, prettyPrinted:Bool = false) -> String? {
+    func JSONStringify(value: AnyObject, prettyPrinted:Bool = false) -> NSData? {
         
         let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(rawValue: 0)
         
@@ -190,9 +219,10 @@ class KeyboardViewController: UIInputViewController {
             
             do {
                 let data = try NSJSONSerialization.dataWithJSONObject(value, options: options)
-                if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                /*if let string = NSString(data: data, encoding: NSUTF8StringEncoding) {
                     return string as String
-                }
+                }*/
+                return data
             } catch {
                 print("JSON conversion error")
                 return nil

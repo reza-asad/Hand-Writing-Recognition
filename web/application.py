@@ -2,12 +2,12 @@ import json
 from flask import Flask, request, abort, jsonify #,Response, 
 
 
-app = Flask(__name__)        
+application = Flask(__name__)        
 KEYS = ['x', 'y', 'time']
 
 # header must be "Content-Type:application/json"
-@app.route('/letter', methods = ['POST'])
-def hello():
+@application.route('/letter', methods = ['GET', 'POST'])
+def predict():
     # parse the GET request
     # should be in the following form:
     # {'99999' : [
@@ -15,7 +15,12 @@ def hello():
     #   [{'y': y, 'x': x, 'time': time}, {'y': y, 'x': x, 'time': time}, ...], - stroke 2
     #   ...
     # ]}
-
+    if request.method == 'GET':
+        resp = {'success': True, 'message': 'Use this API to predict handwritten letter based on strokes'}
+        resp = jsonify(resp)
+        resp.status_code = 200
+        return resp
+        
     req = request.get_json()
     if req == None:
         abort(400)
@@ -80,4 +85,4 @@ def hello():
     return resp
 			
 if __name__ == "__main__": 
-    app.run(debug=True)
+    application.run()
