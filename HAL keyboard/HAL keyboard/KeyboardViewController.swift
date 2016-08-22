@@ -17,7 +17,7 @@ class KeyboardViewController: UIInputViewController {
     let OPACITY: CGFloat = 1.0
     var swiped = false
     let TESTUSER = "99999"
-    typealias Stroke = [[String: Int]]
+    typealias Stroke = [[String: AnyObject]]
     var currentStroke = Stroke()
     let URL = NSURL(string: "http://new-flask-env.fjx3ah5cp2.us-west-2.elasticbeanstalk.com/letter")
     
@@ -153,9 +153,9 @@ class KeyboardViewController: UIInputViewController {
     func drawLineFrom(fromPoint: CGPoint, toPoint: CGPoint) {
         let x = Int(round(fromPoint.x))
         let y = Int(round(fromPoint.y))
-        let timeInMS = Int(round((NSDate().timeIntervalSince1970) * 1000))
+        let timeInMS = CUnsignedLongLong(round((NSDate().timeIntervalSince1970) * 1000))
         //print("x: \(x), y: \(y), time: \(timeInMS)")
-        let coords: [String: Int] = ["x": x, "y": y, "time": timeInMS]
+        let coords: [String: AnyObject] = ["x": x, "y": y, "time": NSNumber(unsignedLongLong: timeInMS)]
         currentStroke.append(coords)
         UIGraphicsBeginImageContext(letterDrawView.frame.size)
         let context = UIGraphicsGetCurrentContext()
