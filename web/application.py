@@ -5,6 +5,7 @@ from flask import Flask, request, abort, jsonify #,Response,
 application = Flask(__name__)        
 KEYS = ['x', 'y', 'time']
 
+
 # header must be "Content-Type:application/json"
 @application.route('/letter', methods = ['GET', 'POST'])
 def predict():
@@ -64,25 +65,12 @@ def predict():
                 abort(400)
 
     # generate response
-    data = [
-        {
-            'letter'  : 'A',
-            'prob' : 0.9
-        },
-        {
-            'letter' : 'B',
-            'prob' : 0.05
-        },
-        {
-            'letter' : 'C',
-            'prob' : 0.05
-        }
-    ]
-    js = json.dumps(data)
-    #resp = Response(js, status=200, mimetype='application/json')
-    resp = jsonify(data)
+    data = ['A', 'B', 'C'] #TODO
+    result = {'1': data[0], '2': data[1], '3': data[2]}
+
+    resp = jsonify(result)
     resp.status_code = 200
     return resp
 			
-if __name__ == "__main__": 
+if __name__ == "__main__":
     application.run()

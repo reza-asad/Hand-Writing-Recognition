@@ -24,21 +24,25 @@ class KeyboardViewController: UIInputViewController {
     @IBAction func getLetterFromServer(sender: UIButton) {
         if (jsonObject[TESTUSER]!.count > 0) {
             if let jsonData = JSONStringify(jsonObject) {
-                print(sendHTTPRequest(jsonData))
+                let response = sendHTTPRequest(jsonData)
+                print(response)
             } 
         }
+        clearScreen();
     }
     
+    func clearScreen() {
+        jsonObject[TESTUSER] = []
+        letterDrawView.image = nil
+        letterDrawView.backgroundColor = UIColor.whiteColor()
+    }
     
     @IBAction func nextKeyboardButton(sender: UIButton) {
         advanceToNextInputMode()
     }
     
     @IBAction func clearDrawing(sender: UIButton) {
-        //print("xxxxxxxxxxxxxxxxx CLEAR xxxxxxx")
-        jsonObject[TESTUSER] = []
-        letterDrawView.image = nil
-        letterDrawView.backgroundColor = UIColor.whiteColor()
+        clearScreen()
     }
     
     /* holds the json data for letter's strokes in the format
