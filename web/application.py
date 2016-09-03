@@ -1,6 +1,16 @@
 import json
-from flask import Flask, request, abort, jsonify #,Response, 
+from flask import Flask, request, abort, jsonify
+import pandas as pd
+from config import NUM_TREES
+from sklearn.ensemble import RandomForestClassifier
+import os
+from final_model import model
 
+# This reads the preprocessed data
+dir = os.path.dirname(os.getcwd())
+data_path = dir+'/final_model/data'
+data = pd.read_pickle(data_path)
+rf = None
 
 application = Flask(__name__)        
 KEYS = ['x', 'y', 'time']
@@ -73,4 +83,6 @@ def predict():
     return resp
 			
 if __name__ == "__main__":
+    print('initialized')
+    rf = model.rf_model(data)
     application.run()
