@@ -7,26 +7,27 @@ from preprocessing import drawing_record
 
 # This preprocesses the data
 def preprocess_data(recording, with_label=False):
-    dr = drawing_record(recording[recording.keys()[0]])
-    if len(dr.strokes) > NUM_STROKES_AS_FEATURE:
-        continue
-    dr.remov_None_strokes()
-    dr.stroke_connect()
-    dr.dehook(beg=True, end=True)
-    dr.average_smoothing()
-    try:
-        dr.resample()
-    except LinAlgError:
-        pass
-    dr.scale_shift()
-    dr.extract_local_features()
-    dr.extract_global_features()
-    if np.isnan(dr.features).any():
-        print 'nan value found', i
-        continue    
-    if with_label:
-        return [dr.features], [recording.keys()[0]]
-    return [dr.features], None
+    for i, record in enumerate(recordings):
+	    dr = drawing_record(recording[recording.keys()[0]])
+    	if len(dr.strokes) > NUM_STROKES_AS_FEATURE:
+        	continue
+		dr.remov_None_strokes()
+		dr.stroke_connect()
+		dr.dehook(beg=True, end=True)
+		dr.average_smoothing()
+		try:
+        	dr.resample()
+    	except LinAlgError:
+        	pass
+    	dr.scale_shift()
+    	dr.extract_local_features()
+    	dr.extract_global_features()
+    	if np.isnan(dr.features).any():
+        	print 'nan value found', i
+        	continue    
+    	if with_label:
+        	return [dr.features], [recording.keys()[0]]
+    	return [dr.features], None
 
 # This returns the top k characters that the drawing is likely to be
 # Input: 
