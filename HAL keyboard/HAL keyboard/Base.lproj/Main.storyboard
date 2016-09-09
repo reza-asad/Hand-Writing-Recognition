@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Start View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HAL_keyboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="StartViewController" customModule="HAL_Keyboard_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -17,27 +17,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q0x-t0-GCz">
-                                <rect key="frame" x="200.5" y="285" width="200" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dfa-nz-bwR">
+                                <rect key="frame" x="213" y="285" width="174" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.98985327889999997" blue="0.83781934459999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="1tT-m8-LIy"/>
+                                    <constraint firstAttribute="height" constant="30" id="C88-YJ-ShY"/>
+                                    <constraint firstAttribute="width" constant="174" id="NES-Tu-8TM"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <state key="normal" title="Let's get started"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="q0x-t0-GCz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="EIe-4q-TkS"/>
-                            <constraint firstItem="q0x-t0-GCz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u91-Pw-B8A"/>
+                            <constraint firstItem="Dfa-nz-bwR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="734-x5-E4l"/>
+                            <constraint firstItem="Dfa-nz-bwR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="R76-dk-HSa"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="textField" destination="q0x-t0-GCz" id="Wwy-X3-BdN"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="280" y="290"/>
         </scene>
     </scenes>
 </document>

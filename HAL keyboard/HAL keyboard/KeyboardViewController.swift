@@ -8,21 +8,20 @@
 
 import UIKit
 
-class KeyboardViewController: UIInputViewController {
+class KeyboardViewController: UIInputViewController, UIPopoverPresentationControllerDelegate, SelectedColorDelegate {
     var lastPoint: CGPoint?
     let BRUSHWIDTH: CGFloat = 3.0
-    let red: CGFloat = 0.0
-    let green: CGFloat = 0.0
-    let blue: CGFloat = 0.0
     let OPACITY: CGFloat = 1.0
     var swiped = false
     let TESTUSER = "99999"
     typealias Stroke = [[String: AnyObject]]
     var currentStroke = Stroke()
     let URL = NSURL(string: "http://new-flask-env.fjx3ah5cp2.us-west-2.elasticbeanstalk.com/letter")
+    var currentColor = UIColor.blackColor()
     
     @IBAction func getLetterFromServer(sender: UIButton) {
         if (jsonObject[TESTUSER]!.count > 0) {
+            UIPasteboard.generalPasteboard().image = letterDrawView.image
             if let jsonData = JSONStringify(jsonObject) {
                 let response = sendHTTPRequest(jsonData)
                 print(response)
@@ -37,12 +36,68 @@ class KeyboardViewController: UIInputViewController {
         letterDrawView.backgroundColor = UIColor.whiteColor()
     }
     
+    @IBAction func backspace(sender: UIButton) {
+        textDocumentProxy.deleteBackward()
+    }
+    
+    
     @IBAction func nextKeyboardButton(sender: UIButton) {
         advanceToNextInputMode()
     }
     
     @IBAction func clearDrawing(sender: UIButton) {
         clearScreen()
+    }
+    
+    @IBAction func showColorPalette(sender: UIButton) {
+        print("show color palette")
+        let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("Palette Collection") as! PaletteCollectionViewController
+        vc.delegate = self
+        vc.modalPresentationStyle = .Popover
+        vc.preferredContentSize = CGSize(width: 100, height: 200)
+        
+        //let vw = vc.view
+        let popoverMenuViewController = vc.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Left
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = sender
+        popoverMenuViewController?.sourceRect = sender.bounds
+        self.presentViewController(vc, animated: true, completion: nil)
+1
+    }
+    
+    @IBAction func showPunctuation(sender: UIButton) {
+        print("show punctuation")
+        let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("Punctuation") as! PunctuationViewController
+        vc.modalPresentationStyle = .Popover
+        vc.preferredContentSize = CGSize(width: 300, height: 200)
+        
+        //let vw = vc.view
+        let popoverMenuViewController = vc.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Right
+        popoverMenuViewController?.delegate = self
+        popoverMenuViewController?.sourceView = sender
+        popoverMenuViewController?.sourceRect = sender.bounds
+        self.presentViewController(vc, animated: true, completion: nil)
+
+    }
+    
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
+    
+    @IBOutlet weak var option1: UIButton!
+    @IBOutlet weak var option2: UIButton!
+    @IBOutlet weak var option3: UIButton!
+    
+    @IBAction func selectLetter(sender: UIButton) {
+        if let letter = sender.titleLabel?.text {
+            textDocumentProxy.insertText(letter)
+        }
     }
     
     /* holds the json data for letter's strokes in the format
@@ -59,6 +114,35 @@ class KeyboardViewController: UIInputViewController {
     
     @IBOutlet weak var letterDrawView: UIImageView!
     
+    @IBOutlet weak var keyboardButton: UIButton!
+    @IBOutlet weak var colorButton: UIButton!
+    @IBOutlet weak var Xbutton: UIButton!
+    @IBOutlet weak var backspaceButton: UIButton!
+    
+    @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var punctuationButton: UIButton!
+    
+    func setButtonDesign() {
+        keyboardButton.layer.cornerRadius = 10
+        keyboardButton.layer.borderColor = UIColor.blackColor().CGColor
+        keyboardButton.layer.borderWidth = 1.0
+        colorButton.layer.cornerRadius = 10
+        colorButton.layer.borderColor = UIColor.blackColor().CGColor
+        colorButton.layer.borderWidth = 1.0
+        
+        Xbutton.layer.cornerRadius = 10
+        Xbutton.layer.borderColor = UIColor.blackColor().CGColor
+        Xbutton.layer.borderWidth = 1.0
+        backspaceButton.layer.cornerRadius = 10
+        backspaceButton.layer.borderColor = UIColor.blackColor().CGColor
+        backspaceButton.layer.borderWidth = 1.0
+        acceptButton.layer.cornerRadius = 10
+        acceptButton.layer.borderColor = UIColor.blackColor().CGColor
+        acceptButton.layer.borderWidth = 1.0
+        punctuationButton.layer.cornerRadius = 10
+        punctuationButton.layer.borderColor = UIColor.blackColor().CGColor
+        punctuationButton.layer.borderWidth = 1.0
+    }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -70,23 +154,18 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
         loadInterface()
         jsonObject[TESTUSER] = []
+        setButtonDesign()
     }
     
     func loadInterface() {
-        // load the nib file
-        let keyboardNib = UINib(nibName: "KeyboardView", bundle: nil)
-        // instantiate the view
-        keyboardView = keyboardNib.instantiateWithOwner(self, options: nil)[0] as! UIView
- 
+        keyboardView = NSBundle.mainBundle().loadNibNamed("KeyboardView", owner: self, options: nil)[0] as! UIView
         keyboardView.frame = self.view.frame
-    
         // add the interface to the main view
         view.addSubview(keyboardView)
-        
         // copy the background color
         view.backgroundColor = keyboardView.backgroundColor
-        
-        
+        letterDrawView.layer.cornerRadius = 10
+        letterDrawView.clipsToBounds = true
     }
 
     func sendHTTPRequest(jsonBody: NSData) -> NSURLSessionDataTask {
@@ -97,16 +176,22 @@ class KeyboardViewController: UIInputViewController {
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = jsonBody
         
-        
+        // async request
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request){ data, response, error in
-            if error != nil{
+            if error != nil {
                 print("Error -> \(error)")
                 return
             }
             
             do {
-                let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:AnyObject]
-                
+                let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:String]
+                if let result = result {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.option1.setTitle(result["1"], forState: .Normal)
+                        self.option2.setTitle(result["2"], forState: .Normal)
+                        self.option3.setTitle(result["3"], forState: .Normal)
+                    })
+                }
                 print("Result -> \(result)")
                 
             } catch {
@@ -172,7 +257,8 @@ class KeyboardViewController: UIInputViewController {
         // 3
         CGContextSetLineCap(context, CGLineCap.Round)
         CGContextSetLineWidth(context, BRUSHWIDTH)
-        CGContextSetRGBStrokeColor(context, red, green, blue, OPACITY)
+        CGContextSetStrokeColorWithColor(context, currentColor.CGColor)
+        //CGContextSetRGBStrokeColor(context, currentColor.CGColor, currentColor.CIColor.green, currentColor.CIColor.blue, OPACITY)
         CGContextSetBlendMode(context, CGBlendMode.Normal)
         
         // 4
@@ -234,6 +320,10 @@ class KeyboardViewController: UIInputViewController {
             
         }
         return nil
+    }
+    
+    func selectedColor(color: UIColor) {
+        currentColor = color
     }
     
 

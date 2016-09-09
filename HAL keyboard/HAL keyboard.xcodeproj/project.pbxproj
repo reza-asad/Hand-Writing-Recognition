@@ -7,16 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A119EA531D7CC8E50073FB95 /* PaletteCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119EA511D7CC8E50073FB95 /* PaletteCollectionViewController.swift */; };
+		A13E4C961D7E28C500835CAC /* PunctuationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13E4C951D7E28C500835CAC /* PunctuationViewController.swift */; };
 		A172B8DB1D56782F0066FE12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B8DA1D56782F0066FE12 /* AppDelegate.swift */; };
-		A172B8DD1D56782F0066FE12 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B8DC1D56782F0066FE12 /* ViewController.swift */; };
 		A172B8E01D56782F0066FE12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A172B8DE1D56782F0066FE12 /* Main.storyboard */; };
 		A172B8E31D56782F0066FE12 /* HAL_keyboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A172B8E11D56782F0066FE12 /* HAL_keyboard.xcdatamodeld */; };
 		A172B8E51D56782F0066FE12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A172B8E41D56782F0066FE12 /* Assets.xcassets */; };
-		A172B8E81D56782F0066FE12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A172B8E61D56782F0066FE12 /* LaunchScreen.storyboard */; };
 		A172B8F61D567C340066FE12 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B8F51D567C340066FE12 /* KeyboardViewController.swift */; };
 		A172B8FA1D567C340066FE12 /* HAL Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A172B8F31D567C340066FE12 /* HAL Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		A172B9051D56B4330066FE12 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A172B9041D56B4330066FE12 /* KeyboardView.xib */; };
-		A172B9061D56B56F0066FE12 /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A172B9041D56B4330066FE12 /* KeyboardView.xib */; };
+		A17B2E511D7BAAEB005EDBEE /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E4E1D7BA755005EDBEE /* KeyboardView.xib */; };
+		A17B2E521D7BAB38005EDBEE /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E4E1D7BA755005EDBEE /* KeyboardView.xib */; };
+		A17B2E571D7BC502005EDBEE /* Checkmark-25.png in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E541D7BC502005EDBEE /* Checkmark-25.png */; };
+		A17B2E581D7BC502005EDBEE /* Keyboard-25.png in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E551D7BC502005EDBEE /* Keyboard-25.png */; };
+		A17B2E591D7BC502005EDBEE /* Delete-25.png in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E561D7BC502005EDBEE /* Delete-25.png */; };
+		A17B2E5B1D7BD3A7005EDBEE /* Backspace-25.png in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E5A1D7BD3A7005EDBEE /* Backspace-25.png */; };
+		A17B2E5D1D7BE7FE005EDBEE /* RGB Circle 1-25.png in Resources */ = {isa = PBXBuildFile; fileRef = A17B2E5C1D7BE7FE005EDBEE /* RGB Circle 1-25.png */; };
+		A1897A6C1D7D24B30062B363 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1897A6B1D7D24B30062B363 /* StartViewController.swift */; };
+		A1B3854A1D7CF2C200C7D6EF /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B385491D7CF2C200C7D6EF /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,18 +51,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A172B8D71D56782F0066FE12 /* HAL keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HAL keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A119EA511D7CC8E50073FB95 /* PaletteCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaletteCollectionViewController.swift; path = "../HAL keyboard/PaletteCollectionViewController.swift"; sourceTree = "<group>"; };
+		A13E4C951D7E28C500835CAC /* PunctuationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PunctuationViewController.swift; path = "HAL keyboard/PunctuationViewController.swift"; sourceTree = SOURCE_ROOT; };
+		A172B8D71D56782F0066FE12 /* HAL Keyboard App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HAL Keyboard App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A172B8DA1D56782F0066FE12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A172B8DC1D56782F0066FE12 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A172B8DF1D56782F0066FE12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A172B8E21D56782F0066FE12 /* HAL_keyboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HAL_keyboard.xcdatamodel; sourceTree = "<group>"; };
 		A172B8E41D56782F0066FE12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A172B8E71D56782F0066FE12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A172B8E91D56782F0066FE12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A172B8F31D567C340066FE12 /* HAL Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HAL Keyboard.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A172B8F51D567C340066FE12 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		A172B8F71D567C340066FE12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A172B9041D56B4330066FE12 /* KeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
+		A17B2E4E1D7BA755005EDBEE /* KeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KeyboardView.xib; path = "HAL keyboard/KeyboardView.xib"; sourceTree = SOURCE_ROOT; };
+		A17B2E541D7BC502005EDBEE /* Checkmark-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark-25.png"; sourceTree = "<group>"; };
+		A17B2E551D7BC502005EDBEE /* Keyboard-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Keyboard-25.png"; sourceTree = "<group>"; };
+		A17B2E561D7BC502005EDBEE /* Delete-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete-25.png"; sourceTree = "<group>"; };
+		A17B2E5A1D7BD3A7005EDBEE /* Backspace-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Backspace-25.png"; sourceTree = "<group>"; };
+		A17B2E5C1D7BE7FE005EDBEE /* RGB Circle 1-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RGB Circle 1-25.png"; sourceTree = "<group>"; };
+		A1897A6B1D7D24B30062B363 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		A1B385491D7CF2C200C7D6EF /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +102,7 @@
 		A172B8D81D56782F0066FE12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A172B8D71D56782F0066FE12 /* HAL keyboard.app */,
+				A172B8D71D56782F0066FE12 /* HAL Keyboard App.app */,
 				A172B8F31D567C340066FE12 /* HAL Keyboard.appex */,
 			);
 			name = Products;
@@ -98,10 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				A172B8DA1D56782F0066FE12 /* AppDelegate.swift */,
-				A172B8DC1D56782F0066FE12 /* ViewController.swift */,
 				A172B8DE1D56782F0066FE12 /* Main.storyboard */,
+				A1897A6B1D7D24B30062B363 /* StartViewController.swift */,
 				A172B8E41D56782F0066FE12 /* Assets.xcassets */,
-				A172B8E61D56782F0066FE12 /* LaunchScreen.storyboard */,
 				A172B8E91D56782F0066FE12 /* Info.plist */,
 				A172B8E11D56782F0066FE12 /* HAL_keyboard.xcdatamodeld */,
 			);
@@ -112,9 +125,17 @@
 		A172B8F41D567C340066FE12 /* HAL Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				A119EA511D7CC8E50073FB95 /* PaletteCollectionViewController.swift */,
 				A172B8F51D567C340066FE12 /* KeyboardViewController.swift */,
+				A17B2E4E1D7BA755005EDBEE /* KeyboardView.xib */,
+				A17B2E5A1D7BD3A7005EDBEE /* Backspace-25.png */,
+				A17B2E541D7BC502005EDBEE /* Checkmark-25.png */,
+				A17B2E5C1D7BE7FE005EDBEE /* RGB Circle 1-25.png */,
+				A17B2E551D7BC502005EDBEE /* Keyboard-25.png */,
+				A17B2E561D7BC502005EDBEE /* Delete-25.png */,
 				A172B8F71D567C340066FE12 /* Info.plist */,
-				A172B9041D56B4330066FE12 /* KeyboardView.xib */,
+				A1B385491D7CF2C200C7D6EF /* Storyboard.storyboard */,
+				A13E4C951D7E28C500835CAC /* PunctuationViewController.swift */,
 			);
 			path = "HAL Keyboard";
 			sourceTree = "<group>";
@@ -122,9 +143,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A172B8D61D56782F0066FE12 /* HAL keyboard */ = {
+		A172B8D61D56782F0066FE12 /* HAL Keyboard App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A172B8EC1D56782F0066FE12 /* Build configuration list for PBXNativeTarget "HAL keyboard" */;
+			buildConfigurationList = A172B8EC1D56782F0066FE12 /* Build configuration list for PBXNativeTarget "HAL Keyboard App" */;
 			buildPhases = (
 				A172B8D31D56782F0066FE12 /* Sources */,
 				A172B8D41D56782F0066FE12 /* Frameworks */,
@@ -136,9 +157,9 @@
 			dependencies = (
 				A172B8F91D567C340066FE12 /* PBXTargetDependency */,
 			);
-			name = "HAL keyboard";
+			name = "HAL Keyboard App";
 			productName = "HAL keyboard";
-			productReference = A172B8D71D56782F0066FE12 /* HAL keyboard.app */;
+			productReference = A172B8D71D56782F0066FE12 /* HAL Keyboard App.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A172B8F21D567C340066FE12 /* HAL Keyboard */ = {
@@ -191,7 +212,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A172B8D61D56782F0066FE12 /* HAL keyboard */,
+				A172B8D61D56782F0066FE12 /* HAL Keyboard App */,
 				A172B8F21D567C340066FE12 /* HAL Keyboard */,
 			);
 		};
@@ -202,9 +223,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A172B8E81D56782F0066FE12 /* LaunchScreen.storyboard in Resources */,
-				A172B9061D56B56F0066FE12 /* KeyboardView.xib in Resources */,
 				A172B8E51D56782F0066FE12 /* Assets.xcassets in Resources */,
+				A17B2E521D7BAB38005EDBEE /* KeyboardView.xib in Resources */,
 				A172B8E01D56782F0066FE12 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,7 +233,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A172B9051D56B4330066FE12 /* KeyboardView.xib in Resources */,
+				A17B2E581D7BC502005EDBEE /* Keyboard-25.png in Resources */,
+				A17B2E571D7BC502005EDBEE /* Checkmark-25.png in Resources */,
+				A17B2E5D1D7BE7FE005EDBEE /* RGB Circle 1-25.png in Resources */,
+				A17B2E511D7BAAEB005EDBEE /* KeyboardView.xib in Resources */,
+				A17B2E591D7BC502005EDBEE /* Delete-25.png in Resources */,
+				A17B2E5B1D7BD3A7005EDBEE /* Backspace-25.png in Resources */,
+				A1B3854A1D7CF2C200C7D6EF /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,8 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A172B8E31D56782F0066FE12 /* HAL_keyboard.xcdatamodeld in Sources */,
-				A172B8DD1D56782F0066FE12 /* ViewController.swift in Sources */,
 				A172B8DB1D56782F0066FE12 /* AppDelegate.swift in Sources */,
+				A1897A6C1D7D24B30062B363 /* StartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +260,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A13E4C961D7E28C500835CAC /* PunctuationViewController.swift in Sources */,
+				A119EA531D7CC8E50073FB95 /* PaletteCollectionViewController.swift in Sources */,
 				A172B8F61D567C340066FE12 /* KeyboardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,14 +283,6 @@
 				A172B8DF1D56782F0066FE12 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A172B8E61D56782F0066FE12 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A172B8E71D56782F0066FE12 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -423,7 +443,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A172B8EC1D56782F0066FE12 /* Build configuration list for PBXNativeTarget "HAL keyboard" */ = {
+		A172B8EC1D56782F0066FE12 /* Build configuration list for PBXNativeTarget "HAL Keyboard App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A172B8ED1D56782F0066FE12 /* Debug */,
