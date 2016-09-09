@@ -1,3 +1,10 @@
+from utility import find_dist
+import numpy as np
+import pandas as pd
+from config import *
+from scipy.interpolate import interp1d
+
+
 # Create a class drawing_record that has methods to
 # handle each record (scaling, resampling, feature 
 # extraction)
@@ -14,13 +21,7 @@ class drawing_record():
         Clean the strokes from None values
         """
         self.strokes = filter(lambda stroke: stroke is not None, self.strokes)
-    
-    def wild_filter(self):
-        """
-        Remove points with high speed (caused by hardware error)
-        """
-        pass
-        
+            
     def stroke_connect(self):
         """
         Connects two srokes if the distance betwen them
@@ -59,11 +60,11 @@ class drawing_record():
             p_10 = diff(points[0], points[1])
             p_21 = diff(points[1], points[2])
             # Find the cosine of the angle
-            cos_angle = float(p_10.dot(p_21))/((sqrt(p_10.dot(p_10)) + 
+            cos_angle = float(p_10.dot(p_21))/((np.sqrt(p_10.dot(p_10)) + 
                                                 FACTOR_CORRECTION) * 
-                                               (sqrt(p_21.dot(p_21)) +
+                                               (np.sqrt(p_21.dot(p_21)) +
                                                 FACTOR_CORRECTION))
-            angle = arccos(cos_angle) * 180/pi
+            angle = np.arccos(cos_angle) * 180/np.pi
             return angle
         
         # Dehooks at the begining
@@ -172,7 +173,7 @@ class drawing_record():
                 t.append(point['time'])
             f_x = interp1d(t, x)
             f_y = interp1d(t, y, kind='cubic')
-            time_interval = linspace(t[0], t[-1], num=NUM_RESAMPLE)
+            time_interval = np.linspace(t[0], t[-1], num=NUM_RESAMPLE)
             for t_ in time_interval:
                 p = {'time':0, 'x':0, 'y':0}
                 p['time'] = t_
@@ -197,10 +198,10 @@ class drawing_record():
         """
         # Finds the height of a stroke
         def stroke_height(x,y):
-            return sqrt((x[0]-x[-1])**2 + (y[0]-y[-1])**2)
+            return np.sqrt((x[0]-x[-1])**2 + (y[0]-y[-1])**2)
         # Finds the length of a stroke
         def stroke_length(x,y):
-            return sum(sqrt(np.diff(x,1)**2+np.diff(y,1)**2)) 
+            return sum(np.sqrt(np.diff(x,1)**2+np.diff(y,1)**2)) 
         features = []
         for i, stroke in enumerate(self.strokes):
             if i < NUM_STROKES_AS_FEATURE:
@@ -217,10 +218,10 @@ class drawing_record():
                 length = stroke_length(x,y)
                 features += [height/length]
 
-                # This is only for plotting purposes
-                self.sample_stroke.append(stroke[::len(stroke)/STROKE_PARTITION])
-                
-        num_features = ((STROKE_PARTITION) * 2 + 1) * NUM_STROKES_AS_FEATURE
+                # Add the length of the stroke as a feature
+                features += [length]
+
+        num_features = ((STROKE_PARTITION) * 2 + 2) * NUM_STROKES_AS_FEATURE
         if len(features) != num_features:
             features = features + [0] * (num_features - len(features))
         self.features = features
