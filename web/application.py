@@ -1,18 +1,28 @@
 import json
 from flask import Flask, request, abort, jsonify
 import pandas as pd
-from config import NUM_TREES
 from sklearn.ensemble import RandomForestClassifier
 import os
 from final_model import model
+from final_model import character_recognition
+from final_model import utility
 
+application = Flask(__name__)
 # This reads the preprocessed data
-dir = os.path.dirname(os.getcwd())
-data_path = dir+'/final_model/data'
-data = pd.read_pickle(data_path)
-rf = None
 
-application = Flask(__name__)        
+dir = os.path.abspath('data/pickle')
+data = pd.read_pickle(dir+'/x_data')
+
+# Center and scale the data
+utility.center_scale(data)
+
+# Read the labels
+labels = pd.read_pickle(dir+'/y_data')[0]
+
+# Run the random forrest model using the best number of trees
+# On the validation set
+rf = model.rf_model(data,labels)
+       
 KEYS = ['x', 'y', 'time']
 
 
@@ -75,14 +85,10 @@ def predict():
                 abort(400)
 
     # generate response
-    data = ['A', 'B', 'C'] #TODO
-    result = {'1': data[0], '2': data[1], '3': data[2]}
-
-    resp = jsonify(result)
+    data = character_recognition.find_top_k_chars(req, rf)
+    resp = jsonify(data)
     resp.status_code = 200
     return resp
 			
 if __name__ == "__main__":
-    print('initialized')
-    rf = model.rf_model(data)
     application.run()

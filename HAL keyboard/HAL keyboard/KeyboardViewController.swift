@@ -184,12 +184,13 @@ class KeyboardViewController: UIInputViewController, UIPopoverPresentationContro
             }
             
             do {
-                let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:String]
+                let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:[String]]
                 if let result = result {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.option1.setTitle(result["1"], forState: .Normal)
-                        self.option2.setTitle(result["2"], forState: .Normal)
-                        self.option3.setTitle(result["3"], forState: .Normal)
+                        self.textDocumentProxy.insertText(result[self.TESTUSER]![0])
+                        self.option1.setTitle(result[self.TESTUSER]![0], forState: .Normal)
+                        self.option2.setTitle(result[self.TESTUSER]![1], forState: .Normal)
+                        self.option3.setTitle(result[self.TESTUSER]![2], forState: .Normal)
                     })
                 }
                 print("Result -> \(result)")

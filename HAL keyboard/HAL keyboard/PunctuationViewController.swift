@@ -9,7 +9,8 @@
 import UIKit
 
 class PunctuationViewController: UIViewController {
-
+    
+    
     @IBOutlet weak var buttonStack: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,10 @@ class PunctuationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func typeSymbol(sender: UIButton) {
+    }
 
+    
     /*
     // MARK: - Navigation
 

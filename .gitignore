@@ -152,3 +152,6 @@ fastlane/screenshots
 fastlane/test_output
 
 web/final_model/data
+web/data/pickle
+*x_data
+*y_data
