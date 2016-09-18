@@ -17,7 +17,7 @@ data = pd.read_pickle(dir+'/x_data')
 utility.center_scale(data)
 
 # Read the labels
-labels = pd.read_pickle(dir+'/y_data')[0]
+labels = pd.read_pickle(dir+'/y_data')['response']
 
 # Run the random forrest model using the best number of trees
 # On the validation set

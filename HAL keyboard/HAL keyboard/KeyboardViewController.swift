@@ -16,7 +16,7 @@ class KeyboardViewController: UIInputViewController, UIPopoverPresentationContro
     let TESTUSER = "99999"
     typealias Stroke = [[String: AnyObject]]
     var currentStroke = Stroke()
-    let URL = NSURL(string: "http://new-flask-env.fjx3ah5cp2.us-west-2.elasticbeanstalk.com/letter")
+    let URL = NSURL(string: "http://clean-env.fjx3ah5cp2.us-west-2.elasticbeanstalk.com/letter")
     var currentColor = UIColor.blackColor()
     
     @IBAction func getLetterFromServer(sender: UIButton) {
@@ -169,7 +169,7 @@ class KeyboardViewController: UIInputViewController, UIPopoverPresentationContro
     }
 
     func sendHTTPRequest(jsonBody: NSData) -> NSURLSessionDataTask {
-        
+        print("Sending request")
         let request = NSMutableURLRequest(URL: URL!)
         request.HTTPMethod = "POST"
         // insert json data to the request
@@ -187,6 +187,7 @@ class KeyboardViewController: UIInputViewController, UIPopoverPresentationContro
                 let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String:[String]]
                 if let result = result {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        print("Ready")
                         self.textDocumentProxy.insertText(result[self.TESTUSER]![0])
                         self.option1.setTitle(result[self.TESTUSER]![0], forState: .Normal)
                         self.option2.setTitle(result[self.TESTUSER]![1], forState: .Normal)
