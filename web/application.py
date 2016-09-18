@@ -21,7 +21,7 @@ labels = pd.read_pickle(dir+'/y_data')['response']
 
 # Run the random forrest model using the best number of trees
 # On the validation set
-rf = model.rf_model(data,labels)
+nn = model.nn_model(data,labels)
        
 KEYS = ['x', 'y', 'time']
 
@@ -85,10 +85,10 @@ def predict():
                 abort(400)
 
     # generate response
-    data = character_recognition.find_top_k_chars(req, rf)
+    data = character_recognition.find_top_k_chars(req, nn)
     resp = jsonify(data)
     resp.status_code = 200
     return resp
 			
 if __name__ == "__main__":
-    application.run()
+    application.run(debug=True)
