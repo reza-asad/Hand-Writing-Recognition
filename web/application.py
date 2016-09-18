@@ -3,7 +3,7 @@ from flask import Flask, request, abort, jsonify
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 import os
-from final_model import model
+import pickle
 from final_model import character_recognition
 from final_model import utility
 
@@ -19,9 +19,9 @@ utility.center_scale(data)
 # Read the labels
 labels = pd.read_pickle(dir+'/y_data')['response']
 
-# Run the random forrest model using the best number of trees
-# On the validation set
-nn = model.nn_model(data,labels)
+# Load the model from the pickle file
+dir = os.path.abspath('final_model/pickle')
+nn = pickle.load(open(dir+'/nn.pkl', 'rb'))
        
 KEYS = ['x', 'y', 'time']
 
