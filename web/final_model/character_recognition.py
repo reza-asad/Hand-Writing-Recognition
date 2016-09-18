@@ -41,10 +41,8 @@ def preprocess_data(record):
 #   -k: The number of characters that the drawing is most likely
 # Output:
 #   - The top k characters that the drawing is most likely
-def find_top_k_chars(recording, rf, k=3):
-    print "find top k chars"
+def find_top_k_chars(recording, model, k=3):
     x_test, labels = preprocess_data(recording)
-    print "processed"
     # Convert this test data to datafrmae
     test_dat = DataFrame(x_test)
 
@@ -52,8 +50,8 @@ def find_top_k_chars(recording, rf, k=3):
     center_scale(test_dat)
 
     # This is a dictionary with a unique id as key and labels as value
-    id_to_char = dict(zip(range(len(rf.classes_)), rf.classes_))
+    id_to_char = dict(zip(range(len(model.classes_[0])), model.classes_[0]))
 
     # Predict using the rf model and return the predicted characters
-    test_prediction = rf.predict_proba(x_test)
+    test_prediction = model.predict_proba(test_dat.as_matrix())
     return dict(zip(labels, top_k_prediction(test_prediction, id_to_char)))
